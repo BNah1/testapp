@@ -1,0 +1,40 @@
+name: testapp
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  flutter_dotenv: ^5.2.1
+  fluttertoast: ^8.2.12
+  dio: ^5.8.0+1
+  flutter_bloc: ^8.1.5
+  hydrated_bloc: ^9.1.5
+  http_interceptor: ^2.0.0
+  get_it: ^8.0.3
+  http: ^1.2.1
+  connectivity_plus: ^4.0.0
+  cached_network_image: ^3.4.1
+
+dev_dependencies:
+  freezed_annotation: ^3.0.0
+  freezed: ^3.0.4
+  build_runner: ^2.4.15
+  json_serializable: ^6.7.1
+
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+
+
+flutter:
+
+  uses-material-design: true
