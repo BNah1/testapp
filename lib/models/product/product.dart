@@ -7,27 +7,27 @@ part 'product.g.dart';
 class Product with _$Product {
   const factory Product({
     required int id,
-    required String title,
-    required String description,
-    required String category,
-    required double price,
-    required double discountPercentage,
-    required double rating,
-    required int stock,
-    required List<String> tags,
-    required String brand,
-    required String sku,
-    required num weight,
-    required Dimensions dimensions,
-    required String warrantyInformation,
-    required String shippingInformation,
-    required String availabilityStatus,
-    required List<Review> reviews,
-    required String returnPolicy,
-    required int minimumOrderQuantity,
-    required Meta meta,
-    required List<String> images,
-    required String thumbnail,
+    @Default('') String title,
+    @Default('') String description,
+    @Default('') String category,
+    @Default(0) double price,
+    @JsonKey(name: 'discountPercentage') @Default(0) double discountPercentage,
+    @Default(0) double rating,
+    @Default(0) int stock,
+    @Default(<String>[]) List<String> tags,
+    @Default('') String brand,
+    @Default('') String sku,
+    @Default(0) num weight,
+    Dimensions? dimensions,
+    @Default('') String warrantyInformation,
+    @Default('') String shippingInformation,
+    @Default('') String availabilityStatus,
+    @Default(<Review>[]) List<Review> reviews,
+    @Default('') String returnPolicy,
+    @Default(0) int minimumOrderQuantity,
+    Meta? meta,
+    @Default(<String>[]) List<String> images,
+    @Default('') String thumbnail,
   }) = _Product;
 
   factory Product.fromJson(Map<String, dynamic> json) =>
@@ -51,7 +51,7 @@ class Product with _$Product {
 
   @override
   // TODO: implement dimensions
-  Dimensions get dimensions => throw UnimplementedError();
+  Dimensions? get dimensions => throw UnimplementedError();
 
   @override
   // TODO: implement discountPercentage
@@ -67,7 +67,7 @@ class Product with _$Product {
 
   @override
   // TODO: implement meta
-  Meta get meta => throw UnimplementedError();
+  Meta? get meta => throw UnimplementedError();
 
   @override
   // TODO: implement minimumOrderQuantity
@@ -131,9 +131,9 @@ class Product with _$Product {
 @freezed
 class Dimensions with _$Dimensions {
   const factory Dimensions({
-    required double width,
-    required double height,
-    required double depth,
+    @Default(0) double width,
+    @Default(0) double height,
+    @Default(0) double depth,
   }) = _Dimensions;
 
   factory Dimensions.fromJson(Map<String, dynamic> json) =>
@@ -161,10 +161,10 @@ class Dimensions with _$Dimensions {
 @freezed
 class Meta with _$Meta {
   const factory Meta({
-    required String createdAt,
-    required String updatedAt,
-    required String barcode,
-    required String qrCode,
+    @Default('') String createdAt,
+    @Default('') String updatedAt,
+    @Default('') String barcode,
+    @Default('') String qrCode,
   }) = _Meta;
 
   factory Meta.fromJson(Map<String, dynamic> json) =>
@@ -196,11 +196,11 @@ class Meta with _$Meta {
 @freezed
 class Review with _$Review {
   const factory Review({
-    required int rating,
-    required String comment,
-    required String date,
-    required String reviewerName,
-    required String reviewerEmail,
+    @Default(0) int rating,
+    @Default('') String comment,
+    @Default('') String date,
+    @Default('') String reviewerName,
+    @Default('') String reviewerEmail,
   }) = _Review;
 
   factory Review.fromJson(Map<String, dynamic> json) =>

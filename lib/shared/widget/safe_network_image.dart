@@ -25,7 +25,7 @@ class SafeNetworkImage extends StatelessWidget {
     this.decoration,
     this.borderRadius,
     this.onTap,
-    this.timeout = const Duration(seconds: 3),
+    this.timeout = const Duration(seconds: 1),
   });
 
   @override

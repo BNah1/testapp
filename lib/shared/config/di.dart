@@ -1,11 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:get_it/get_it.dart';
-
-import 'dio.dart';
-
-final GetIt getIt = GetIt.instance;
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
 Future<void> initMain() async {
+
+  // load env - add gitignore as in real app
   await dotenv.load(fileName: '.env');
-  getIt.registerLazySingleton(() => DioConfig());
+
+  // local storage - can save object state in bloc
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: kIsWeb
+        ? HydratedStorage.webStorageDirectory
+        : await getApplicationDocumentsDirectory(),
+  );
 }

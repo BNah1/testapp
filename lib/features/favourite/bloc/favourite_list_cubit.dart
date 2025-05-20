@@ -25,17 +25,29 @@ class FavouriteListCubit extends HydratedCubit<FavouriteStateModel>{
   }
 
   Future<void> addProduct(Product product)async {
-    final newList = List<Product>.from(state.productsFavourite);
-    newList.add(product);
-    final newState = state.copyWith(productsFavourite: newList);
-    emit(newState);
+    try{
+      // check product is exist ?
+      final exists = state.productsFavourite.any((p) => p.id == product.id);
+      if (exists) return;
+
+      final newList = List<Product>.from(state.productsFavourite);
+      newList.add(product);
+      final newState = state.copyWith(productsFavourite: newList);
+      emit(newState);
+    } catch(e) {
+      emit(state.copyWith(errorMessage: e.toString()));
+    }
   }
 
   Future<void> removeProduct(int productId)async {
-    // remove base on product.id
-    final newList = state.productsFavourite.where((e) => e.id != productId).toList();
-    final newState = state.copyWith(productsFavourite: newList);
-    emit(newState);
+    try{
+      // remove base on product.id
+      final newList = state.productsFavourite.where((e) => e.id != productId).toList();
+      final newState = state.copyWith(productsFavourite: newList);
+      emit(newState);
+    } catch(e){
+      emit(state.copyWith(errorMessage: e.toString()));
+    }
   }
 
 }

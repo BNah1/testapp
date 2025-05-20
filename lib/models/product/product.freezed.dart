@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Product {
 
- int get id; String get title; String get description; String get category; double get price; double get discountPercentage; double get rating; int get stock; List<String> get tags; String get brand; String get sku; num get weight; Dimensions get dimensions; String get warrantyInformation; String get shippingInformation; String get availabilityStatus; List<Review> get reviews; String get returnPolicy; int get minimumOrderQuantity; Meta get meta; List<String> get images; String get thumbnail;
+ int get id; String get title; String get description; String get category; double get price;@JsonKey(name: 'discountPercentage') double get discountPercentage; double get rating; int get stock; List<String> get tags; String get brand; String get sku; num get weight; Dimensions? get dimensions; String get warrantyInformation; String get shippingInformation; String get availabilityStatus; List<Review> get reviews; String get returnPolicy; int get minimumOrderQuantity; Meta? get meta; List<String> get images; String get thumbnail;
 /// Create a copy of Product
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -49,11 +49,11 @@ abstract mixin class $ProductCopyWith<$Res>  {
   factory $ProductCopyWith(Product value, $Res Function(Product) _then) = _$ProductCopyWithImpl;
 @useResult
 $Res call({
- int id, String title, String description, String category, double price, double discountPercentage, double rating, int stock, List<String> tags, String brand, String sku, num weight, Dimensions dimensions, String warrantyInformation, String shippingInformation, String availabilityStatus, List<Review> reviews, String returnPolicy, int minimumOrderQuantity, Meta meta, List<String> images, String thumbnail
+ int id, String title, String description, String category, double price,@JsonKey(name: 'discountPercentage') double discountPercentage, double rating, int stock, List<String> tags, String brand, String sku, num weight, Dimensions? dimensions, String warrantyInformation, String shippingInformation, String availabilityStatus, List<Review> reviews, String returnPolicy, int minimumOrderQuantity, Meta? meta, List<String> images, String thumbnail
 });
 
 
-$DimensionsCopyWith<$Res> get dimensions;$MetaCopyWith<$Res> get meta;
+$DimensionsCopyWith<$Res>? get dimensions;$MetaCopyWith<$Res>? get meta;
 
 }
 /// @nodoc
@@ -66,7 +66,7 @@ class _$ProductCopyWithImpl<$Res>
 
 /// Create a copy of Product
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,Object? category = null,Object? price = null,Object? discountPercentage = null,Object? rating = null,Object? stock = null,Object? tags = null,Object? brand = null,Object? sku = null,Object? weight = null,Object? dimensions = null,Object? warrantyInformation = null,Object? shippingInformation = null,Object? availabilityStatus = null,Object? reviews = null,Object? returnPolicy = null,Object? minimumOrderQuantity = null,Object? meta = null,Object? images = null,Object? thumbnail = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,Object? category = null,Object? price = null,Object? discountPercentage = null,Object? rating = null,Object? stock = null,Object? tags = null,Object? brand = null,Object? sku = null,Object? weight = null,Object? dimensions = freezed,Object? warrantyInformation = null,Object? shippingInformation = null,Object? availabilityStatus = null,Object? reviews = null,Object? returnPolicy = null,Object? minimumOrderQuantity = null,Object? meta = freezed,Object? images = null,Object? thumbnail = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -80,15 +80,15 @@ as int,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nu
 as List<String>,brand: null == brand ? _self.brand : brand // ignore: cast_nullable_to_non_nullable
 as String,sku: null == sku ? _self.sku : sku // ignore: cast_nullable_to_non_nullable
 as String,weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
-as num,dimensions: null == dimensions ? _self.dimensions : dimensions // ignore: cast_nullable_to_non_nullable
-as Dimensions,warrantyInformation: null == warrantyInformation ? _self.warrantyInformation : warrantyInformation // ignore: cast_nullable_to_non_nullable
+as num,dimensions: freezed == dimensions ? _self.dimensions : dimensions // ignore: cast_nullable_to_non_nullable
+as Dimensions?,warrantyInformation: null == warrantyInformation ? _self.warrantyInformation : warrantyInformation // ignore: cast_nullable_to_non_nullable
 as String,shippingInformation: null == shippingInformation ? _self.shippingInformation : shippingInformation // ignore: cast_nullable_to_non_nullable
 as String,availabilityStatus: null == availabilityStatus ? _self.availabilityStatus : availabilityStatus // ignore: cast_nullable_to_non_nullable
 as String,reviews: null == reviews ? _self.reviews : reviews // ignore: cast_nullable_to_non_nullable
 as List<Review>,returnPolicy: null == returnPolicy ? _self.returnPolicy : returnPolicy // ignore: cast_nullable_to_non_nullable
 as String,minimumOrderQuantity: null == minimumOrderQuantity ? _self.minimumOrderQuantity : minimumOrderQuantity // ignore: cast_nullable_to_non_nullable
-as int,meta: null == meta ? _self.meta : meta // ignore: cast_nullable_to_non_nullable
-as Meta,images: null == images ? _self.images : images // ignore: cast_nullable_to_non_nullable
+as int,meta: freezed == meta ? _self.meta : meta // ignore: cast_nullable_to_non_nullable
+as Meta?,images: null == images ? _self.images : images // ignore: cast_nullable_to_non_nullable
 as List<String>,thumbnail: null == thumbnail ? _self.thumbnail : thumbnail // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -97,18 +97,24 @@ as String,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$DimensionsCopyWith<$Res> get dimensions {
-  
-  return $DimensionsCopyWith<$Res>(_self.dimensions, (value) {
+$DimensionsCopyWith<$Res>? get dimensions {
+    if (_self.dimensions == null) {
+    return null;
+  }
+
+  return $DimensionsCopyWith<$Res>(_self.dimensions!, (value) {
     return _then(_self.copyWith(dimensions: value));
   });
 }/// Create a copy of Product
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$MetaCopyWith<$Res> get meta {
-  
-  return $MetaCopyWith<$Res>(_self.meta, (value) {
+$MetaCopyWith<$Res>? get meta {
+    if (_self.meta == null) {
+    return null;
+  }
+
+  return $MetaCopyWith<$Res>(_self.meta!, (value) {
     return _then(_self.copyWith(meta: value));
   });
 }
@@ -119,49 +125,49 @@ $MetaCopyWith<$Res> get meta {
 @JsonSerializable()
 
 class _Product implements Product {
-  const _Product({required this.id, required this.title, required this.description, required this.category, required this.price, required this.discountPercentage, required this.rating, required this.stock, required final  List<String> tags, required this.brand, required this.sku, required this.weight, required this.dimensions, required this.warrantyInformation, required this.shippingInformation, required this.availabilityStatus, required final  List<Review> reviews, required this.returnPolicy, required this.minimumOrderQuantity, required this.meta, required final  List<String> images, required this.thumbnail}): _tags = tags,_reviews = reviews,_images = images;
+  const _Product({required this.id, this.title = '', this.description = '', this.category = '', this.price = 0, @JsonKey(name: 'discountPercentage') this.discountPercentage = 0, this.rating = 0, this.stock = 0, final  List<String> tags = const <String>[], this.brand = '', this.sku = '', this.weight = 0, this.dimensions, this.warrantyInformation = '', this.shippingInformation = '', this.availabilityStatus = '', final  List<Review> reviews = const <Review>[], this.returnPolicy = '', this.minimumOrderQuantity = 0, this.meta, final  List<String> images = const <String>[], this.thumbnail = ''}): _tags = tags,_reviews = reviews,_images = images;
   factory _Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);
 
 @override final  int id;
-@override final  String title;
-@override final  String description;
-@override final  String category;
-@override final  double price;
-@override final  double discountPercentage;
-@override final  double rating;
-@override final  int stock;
+@override@JsonKey() final  String title;
+@override@JsonKey() final  String description;
+@override@JsonKey() final  String category;
+@override@JsonKey() final  double price;
+@override@JsonKey(name: 'discountPercentage') final  double discountPercentage;
+@override@JsonKey() final  double rating;
+@override@JsonKey() final  int stock;
  final  List<String> _tags;
-@override List<String> get tags {
+@override@JsonKey() List<String> get tags {
   if (_tags is EqualUnmodifiableListView) return _tags;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_tags);
 }
 
-@override final  String brand;
-@override final  String sku;
-@override final  num weight;
-@override final  Dimensions dimensions;
-@override final  String warrantyInformation;
-@override final  String shippingInformation;
-@override final  String availabilityStatus;
+@override@JsonKey() final  String brand;
+@override@JsonKey() final  String sku;
+@override@JsonKey() final  num weight;
+@override final  Dimensions? dimensions;
+@override@JsonKey() final  String warrantyInformation;
+@override@JsonKey() final  String shippingInformation;
+@override@JsonKey() final  String availabilityStatus;
  final  List<Review> _reviews;
-@override List<Review> get reviews {
+@override@JsonKey() List<Review> get reviews {
   if (_reviews is EqualUnmodifiableListView) return _reviews;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_reviews);
 }
 
-@override final  String returnPolicy;
-@override final  int minimumOrderQuantity;
-@override final  Meta meta;
+@override@JsonKey() final  String returnPolicy;
+@override@JsonKey() final  int minimumOrderQuantity;
+@override final  Meta? meta;
  final  List<String> _images;
-@override List<String> get images {
+@override@JsonKey() List<String> get images {
   if (_images is EqualUnmodifiableListView) return _images;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_images);
 }
 
-@override final  String thumbnail;
+@override@JsonKey() final  String thumbnail;
 
 /// Create a copy of Product
 /// with the given fields replaced by the non-null parameter values.
@@ -196,11 +202,11 @@ abstract mixin class _$ProductCopyWith<$Res> implements $ProductCopyWith<$Res> {
   factory _$ProductCopyWith(_Product value, $Res Function(_Product) _then) = __$ProductCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String title, String description, String category, double price, double discountPercentage, double rating, int stock, List<String> tags, String brand, String sku, num weight, Dimensions dimensions, String warrantyInformation, String shippingInformation, String availabilityStatus, List<Review> reviews, String returnPolicy, int minimumOrderQuantity, Meta meta, List<String> images, String thumbnail
+ int id, String title, String description, String category, double price,@JsonKey(name: 'discountPercentage') double discountPercentage, double rating, int stock, List<String> tags, String brand, String sku, num weight, Dimensions? dimensions, String warrantyInformation, String shippingInformation, String availabilityStatus, List<Review> reviews, String returnPolicy, int minimumOrderQuantity, Meta? meta, List<String> images, String thumbnail
 });
 
 
-@override $DimensionsCopyWith<$Res> get dimensions;@override $MetaCopyWith<$Res> get meta;
+@override $DimensionsCopyWith<$Res>? get dimensions;@override $MetaCopyWith<$Res>? get meta;
 
 }
 /// @nodoc
@@ -213,7 +219,7 @@ class __$ProductCopyWithImpl<$Res>
 
 /// Create a copy of Product
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,Object? category = null,Object? price = null,Object? discountPercentage = null,Object? rating = null,Object? stock = null,Object? tags = null,Object? brand = null,Object? sku = null,Object? weight = null,Object? dimensions = null,Object? warrantyInformation = null,Object? shippingInformation = null,Object? availabilityStatus = null,Object? reviews = null,Object? returnPolicy = null,Object? minimumOrderQuantity = null,Object? meta = null,Object? images = null,Object? thumbnail = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,Object? category = null,Object? price = null,Object? discountPercentage = null,Object? rating = null,Object? stock = null,Object? tags = null,Object? brand = null,Object? sku = null,Object? weight = null,Object? dimensions = freezed,Object? warrantyInformation = null,Object? shippingInformation = null,Object? availabilityStatus = null,Object? reviews = null,Object? returnPolicy = null,Object? minimumOrderQuantity = null,Object? meta = freezed,Object? images = null,Object? thumbnail = null,}) {
   return _then(_Product(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -227,15 +233,15 @@ as int,tags: null == tags ? _self._tags : tags // ignore: cast_nullable_to_non_n
 as List<String>,brand: null == brand ? _self.brand : brand // ignore: cast_nullable_to_non_nullable
 as String,sku: null == sku ? _self.sku : sku // ignore: cast_nullable_to_non_nullable
 as String,weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
-as num,dimensions: null == dimensions ? _self.dimensions : dimensions // ignore: cast_nullable_to_non_nullable
-as Dimensions,warrantyInformation: null == warrantyInformation ? _self.warrantyInformation : warrantyInformation // ignore: cast_nullable_to_non_nullable
+as num,dimensions: freezed == dimensions ? _self.dimensions : dimensions // ignore: cast_nullable_to_non_nullable
+as Dimensions?,warrantyInformation: null == warrantyInformation ? _self.warrantyInformation : warrantyInformation // ignore: cast_nullable_to_non_nullable
 as String,shippingInformation: null == shippingInformation ? _self.shippingInformation : shippingInformation // ignore: cast_nullable_to_non_nullable
 as String,availabilityStatus: null == availabilityStatus ? _self.availabilityStatus : availabilityStatus // ignore: cast_nullable_to_non_nullable
 as String,reviews: null == reviews ? _self._reviews : reviews // ignore: cast_nullable_to_non_nullable
 as List<Review>,returnPolicy: null == returnPolicy ? _self.returnPolicy : returnPolicy // ignore: cast_nullable_to_non_nullable
 as String,minimumOrderQuantity: null == minimumOrderQuantity ? _self.minimumOrderQuantity : minimumOrderQuantity // ignore: cast_nullable_to_non_nullable
-as int,meta: null == meta ? _self.meta : meta // ignore: cast_nullable_to_non_nullable
-as Meta,images: null == images ? _self._images : images // ignore: cast_nullable_to_non_nullable
+as int,meta: freezed == meta ? _self.meta : meta // ignore: cast_nullable_to_non_nullable
+as Meta?,images: null == images ? _self._images : images // ignore: cast_nullable_to_non_nullable
 as List<String>,thumbnail: null == thumbnail ? _self.thumbnail : thumbnail // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -245,18 +251,24 @@ as String,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$DimensionsCopyWith<$Res> get dimensions {
-  
-  return $DimensionsCopyWith<$Res>(_self.dimensions, (value) {
+$DimensionsCopyWith<$Res>? get dimensions {
+    if (_self.dimensions == null) {
+    return null;
+  }
+
+  return $DimensionsCopyWith<$Res>(_self.dimensions!, (value) {
     return _then(_self.copyWith(dimensions: value));
   });
 }/// Create a copy of Product
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$MetaCopyWith<$Res> get meta {
-  
-  return $MetaCopyWith<$Res>(_self.meta, (value) {
+$MetaCopyWith<$Res>? get meta {
+    if (_self.meta == null) {
+    return null;
+  }
+
+  return $MetaCopyWith<$Res>(_self.meta!, (value) {
     return _then(_self.copyWith(meta: value));
   });
 }
@@ -332,12 +344,12 @@ as double,
 @JsonSerializable()
 
 class _Dimensions implements Dimensions {
-  const _Dimensions({required this.width, required this.height, required this.depth});
+  const _Dimensions({this.width = 0, this.height = 0, this.depth = 0});
   factory _Dimensions.fromJson(Map<String, dynamic> json) => _$DimensionsFromJson(json);
 
-@override final  double width;
-@override final  double height;
-@override final  double depth;
+@override@JsonKey() final  double width;
+@override@JsonKey() final  double height;
+@override@JsonKey() final  double depth;
 
 /// Create a copy of Dimensions
 /// with the given fields replaced by the non-null parameter values.
@@ -472,13 +484,13 @@ as String,
 @JsonSerializable()
 
 class _Meta implements Meta {
-  const _Meta({required this.createdAt, required this.updatedAt, required this.barcode, required this.qrCode});
+  const _Meta({this.createdAt = '', this.updatedAt = '', this.barcode = '', this.qrCode = ''});
   factory _Meta.fromJson(Map<String, dynamic> json) => _$MetaFromJson(json);
 
-@override final  String createdAt;
-@override final  String updatedAt;
-@override final  String barcode;
-@override final  String qrCode;
+@override@JsonKey() final  String createdAt;
+@override@JsonKey() final  String updatedAt;
+@override@JsonKey() final  String barcode;
+@override@JsonKey() final  String qrCode;
 
 /// Create a copy of Meta
 /// with the given fields replaced by the non-null parameter values.
@@ -615,14 +627,14 @@ as String,
 @JsonSerializable()
 
 class _Review implements Review {
-  const _Review({required this.rating, required this.comment, required this.date, required this.reviewerName, required this.reviewerEmail});
+  const _Review({this.rating = 0, this.comment = '', this.date = '', this.reviewerName = '', this.reviewerEmail = ''});
   factory _Review.fromJson(Map<String, dynamic> json) => _$ReviewFromJson(json);
 
-@override final  int rating;
-@override final  String comment;
-@override final  String date;
-@override final  String reviewerName;
-@override final  String reviewerEmail;
+@override@JsonKey() final  int rating;
+@override@JsonKey() final  String comment;
+@override@JsonKey() final  String date;
+@override@JsonKey() final  String reviewerName;
+@override@JsonKey() final  String reviewerEmail;
 
 /// Create a copy of Review
 /// with the given fields replaced by the non-null parameter values.
