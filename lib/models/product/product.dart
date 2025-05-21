@@ -11,7 +11,7 @@ class Product with _$Product {
     @Default('') String description,
     @Default('') String category,
     @Default(0) double price,
-    @JsonKey(name: 'discountPercentage') @Default(0) double discountPercentage,
+    @Default(0) double discountPercentage,
     @Default(0) double rating,
     @Default(0) int stock,
     @Default(<String>[]) List<String> tags,

@@ -20,7 +20,7 @@ class FavouriteView extends StatelessWidget {
               return ListView.builder(
                 itemCount: state.productsFavourite.length,
                 itemBuilder: (context, index) {
-                  return ProductItemContain(product: state.productsFavourite[index], isDelete: true,);
+                  return ProductItemContain(product: state.productsFavourite[index], isFavourite: true,);
                 },
               );
 

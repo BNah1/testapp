@@ -14,9 +14,7 @@ class ProductService{
       final response = await RestApi.get('${ApiEndpoints.products}$getAll');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final body = response.body is String
-            ? json.decode(response.body)
-            : response.body;
+        final body = json.decode(response.body);
         final List<dynamic> listData = body['products'] as List<dynamic>;
         return listData.map((e) => Product.fromJson(e)).toList();
       } else {
@@ -32,9 +30,7 @@ class ProductService{
     try {
       final response = await RestApi.get('${ApiEndpoints.searchProduct}$keyWord');
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final body = response.body is String
-            ? json.decode(response.body)
-            : response.body;
+        final body = json.decode(response.body);
         final List<dynamic> listData = body['products'] as List<dynamic>;
         return listData.map((e) => Product.fromJson(e)).toList();
       } else {

@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:testapp/features/product/bloc/product_state.dart';
 import 'package:testapp/service/product_service.dart';
@@ -14,14 +15,14 @@ class ProductCubit extends Cubit<ProductState> {
     try {
       emit(ProductLoading());
       final products = await _service.fetchProducts();
-      emit(ProductLoaded(products,currentIndex));
+      emit(ProductLoaded(products, currentIndex));
     } catch (e) {
-      emit(ProductError('Failed to load products'));
+      _handleErrorMessage(e: e);
     }
   }
 
-// can use api with limit and skip params to + 20 item to improve performance
-  Future<void> loadMoreProduct() async{
+  // can use api with limit and skip params to + 20 item to improve performance
+  Future<void> loadMoreProduct() async {
     try {
       if (state is ProductLoaded) {
         final currentState = state as ProductLoaded;
@@ -38,7 +39,7 @@ class ProductCubit extends Cubit<ProductState> {
         emit(ProductLoaded(currentState.products, currentIndex));
       }
     } catch (e) {
-      emit(ProductError('Failed to load products'));
+      _handleErrorMessage(e: e, isPaging: true);
     }
   }
 
@@ -51,16 +52,26 @@ class ProductCubit extends Cubit<ProductState> {
     return false;
   }
 
-
-  Future<void> searchProduct(String text) async{
+  Future<void> searchProduct(String text) async {
     try {
       emit(ProductLoading());
       currentIndex = 20;
       final products = await _service.searchProducts(text);
-      emit(ProductLoaded(products,currentIndex));
+      emit(ProductLoaded(products, currentIndex));
     } catch (e) {
-      emit(ProductError('Failed to load products'));
+      _handleErrorMessage(e: e);
     }
   }
 
+  void _handleErrorMessage({required Object e, bool isPaging = false}) {
+    if (e is SocketException) {
+      emit(ProductError('No Internet Connection'));
+    } else {
+      if (isPaging) {
+        emit(ProductError('Failed to load next page'));
+      } else {
+        emit(ProductError('Failed to load products : $e'));
+      }
+    }
+  }
 }

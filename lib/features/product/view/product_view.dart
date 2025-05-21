@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:testapp/features/product/bloc/product_cubit.dart';
@@ -5,6 +7,9 @@ import 'package:testapp/features/product/bloc/product_state.dart';
 import 'package:testapp/features/product/repository/product_repository.dart';
 import 'package:testapp/features/product/view/widget/product_item_contain.dart';
 import 'package:testapp/service/product_service.dart';
+import 'package:testapp/shared/app_helper.dart';
+import 'package:testapp/shared/constants/app_string.dart';
+import 'package:testapp/shared/widget/search_contain.dart';
 
 class ProductView extends StatefulWidget {
   const ProductView({super.key});
@@ -19,32 +24,21 @@ class _ProductViewState extends State<ProductView> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _searchController = TextEditingController();
   bool _isLoadingMore = false;
+  Timer? _debounce;
 
   @override
   void initState() {
     super.initState();
     _cubit = ProductCubit(_service);
     _cubit.initLoad();
-
-
-    _scrollController.addListener(() async {
-      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 100) {
-        if (_cubit.hasMore && !_isLoadingMore) {
-          //delay for seconds for user recognise loading
-          _isLoadingMore = true;
-          await Future.delayed(Duration(seconds: 1));
-          await _cubit.loadMoreProduct();
-          await Future.delayed(Duration(seconds: 1));
-          _isLoadingMore = false;
-        }
-      }
-    });
+    addScrollListener();
   }
 
   @override
   void dispose() {
     _searchController.dispose();
     _cubit.close();
+    _debounce?.cancel();
     super.dispose();
   }
 
@@ -59,7 +53,7 @@ class _ProductViewState extends State<ProductView> {
         value: _cubit,
         child: Scaffold(
           appBar: AppBar(
-            title: _searchTest(), // Search nằm trên AppBar
+            title: SearchContain(controller: _searchController, onSearch: getNewListBySearch),
           ),
           body: BlocBuilder<ProductCubit,ProductState>(
             builder: (context , state) {
@@ -70,7 +64,7 @@ class _ProductViewState extends State<ProductView> {
               //having data
               if(state is ProductLoaded){
                 final products = state.products;
-                if(state.products.isEmpty) return Center(child: Text('No Data'));
+                if(state.products.isEmpty) return Center(child: Text(AppString.noData));
 
                 return ListView.builder(
                   controller: _scrollController,
@@ -96,47 +90,36 @@ class _ProductViewState extends State<ProductView> {
   }
 
   void getNewListBySearch(String text) {
-    if(text.isEmpty){
-      _cubit.initLoad();
-    }
-    _cubit.searchProduct(text);
+    // if empty => reload Products
+      if (text.isEmpty) {
+        _cubit.initLoad();
+      } else {
+        _cubit.searchProduct(text);
+      }
   }
 
+  void addScrollListener(){
+    // register scroll listener (setting spacing from bottom is 100)
+    _scrollController.addListener(() async {
+      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 100) {
+        // check if still left product and is not loading
+        if (_cubit.hasMore && !_isLoadingMore) {
 
-  Widget _searchTest() {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      child: TextField(
-        maxLines: 1,
-        controller: _searchController,
-        decoration: InputDecoration(
-          alignLabelWithHint: true,
-          filled: true,
-          fillColor: Colors.white,
-          contentPadding: const EdgeInsets.only(left: 25),
-          label: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
-            decoration: BoxDecoration(
-                color: Colors.grey,
-                borderRadius: BorderRadius.circular(10)
-            ),
-            child: Text('Search',
-            ),
-          ),
-          suffixIcon: IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.search),
-          ),
-        ),
-        // onSubmitted: (value) {
-        //   getNewListBySearch(value);
-        // },
-        onChanged: (value) {
-          getNewListBySearch(value);
-        },
-      ),
-    );
+          //delay for seconds for user recognise loading
+          _isLoadingMore = true;
+          await Future.delayed(Duration(milliseconds: 500));
+          await _cubit.loadMoreProduct();
+          await Future.delayed(Duration(milliseconds: 500));
+          _isLoadingMore = false;
+
+          // check if reached last product
+        } else if (!_cubit.hasMore){
+          AppHelper.showToastBottom(AppString.endReached);
+        }
+      }
+    });
   }
+
 }
 
 

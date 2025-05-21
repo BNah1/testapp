@@ -1,5 +1,7 @@
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:testapp/models/product/product.dart';
+import 'package:testapp/shared/app_helper.dart';
+import 'package:testapp/shared/constants/app_string.dart';
 import 'favourite_list_state_model.dart';
 
 class FavouriteListCubit extends HydratedCubit<FavouriteStateModel>{
@@ -34,8 +36,10 @@ class FavouriteListCubit extends HydratedCubit<FavouriteStateModel>{
       newList.add(product);
       final newState = state.copyWith(productsFavourite: newList);
       emit(newState);
+      AppHelper.showToastBottom(AppString.toastSuccess);
     } catch(e) {
       emit(state.copyWith(errorMessage: e.toString()));
+      AppHelper.showToastBottom(e.toString());
     }
   }
 
@@ -45,8 +49,10 @@ class FavouriteListCubit extends HydratedCubit<FavouriteStateModel>{
       final newList = state.productsFavourite.where((e) => e.id != productId).toList();
       final newState = state.copyWith(productsFavourite: newList);
       emit(newState);
+      AppHelper.showToastBottom(AppString.toastSuccess);
     } catch(e){
       emit(state.copyWith(errorMessage: e.toString()));
+      AppHelper.showToastBottom(e.toString());
     }
   }
 
