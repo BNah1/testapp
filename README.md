@@ -41,7 +41,7 @@ In ProductView:
 
 In FavoriteView:
 - Displays only favorited products.
-- Tap the heart icon to remove from favorites.
+- Tap the remove icon to remove from favorites.
 
 Check local storage Favourite List:
 - Add some products to List
