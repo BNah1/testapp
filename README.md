@@ -43,8 +43,15 @@ In FavoriteView:
 - Displays only favorited products.
 - Tap the heart icon to remove from favorites.
 
-Error / Status Handling:
+Check local storage Favourite List:
+- Add some products to List
+- Reset app
+- Check Favourite View
 
+
+
+
+Error / Status Handling:
 No Internet Connection:
 - Disconnect from Wi-Fi or mobile data.
 - Try to load or search products.
